@@ -1,0 +1,30 @@
+﻿@model RandomWikiNS.Models.WikiPageEditVM
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>WikiPage</h4>
+    <hr />
+	<table class="table">
+		<tr>
+			<th>@Html.DisplayNameFor(model => model.Category)</th>
+			<th>@Html.DisplayNameFor(model => model.Rating)</th>
+		</tr>
+		<tr>
+			<td>
+				@Html.DisplayFor(model => model.Category.CategoryName)
+			</td>
+			<td>
+				@Html.DisplayFor(model => model.Rating.RatingValue)
+			</td>
+		</tr>
+	</table> 
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.PageId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

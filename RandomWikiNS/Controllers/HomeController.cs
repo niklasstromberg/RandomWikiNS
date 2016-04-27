@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
 using System.Web.Mvc;
 
 namespace RandomWikiNS.Controllers
@@ -13,17 +12,19 @@ namespace RandomWikiNS.Controllers
             return View();
         }
 
-        public ActionResult About()
+        // tömmer databasen på allt utom rating-definitionerna
+        public ActionResult EmptyDatabase()
         {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
+            string cs = ConfigurationManager.ConnectionStrings["RandomWikiNSContext"].ConnectionString;
+            using (SqlConnection con = new SqlConnection(cs))
+            {
+                using (SqlCommand cmd = new SqlCommand("ClearDatabase", con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                }
+            }
             return View();
         }
     }

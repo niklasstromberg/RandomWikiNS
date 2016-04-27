@@ -1,0 +1,68 @@
+﻿@model RandomWikiNS.Models.WikiPageEditVM
+
+@{
+	ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+
+@using (Html.BeginForm())
+{
+	@Html.AntiForgeryToken()
+
+	<div class="form-horizontal">
+		<h4>WikiPage</h4>
+		<hr />
+		@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+		@Html.HiddenFor(model => model.PageId)
+
+		<table class="table">
+			<tr>
+				<th>
+					@Html.DisplayNameFor(model => model.Category.CategoryName)
+				</th>
+			</tr>
+			@{ var c = new RandomWikiNS.Controllers.WikiPagesController();}
+			@foreach (var item in Model.categorylist)
+			{
+				<tr>
+					<td>
+						@Html.DisplayFor(modelItem => item.CategoryName)
+					</td>
+
+				<td>
+					<p onclick="@c.AddCategory(Model.PageId, item.Id)" class="btn btn-primary btn-lg">Add</p>
+				</td>
+			</tr>
+			}
+		</table>
+		<table class="table">
+				<tr>
+					<th>
+						@Html.DisplayNameFor(model => model.Rating)
+					</th>
+				</tr>
+
+				@foreach (var item in Model.ratinglist)
+				{
+					<tr>
+						<td>
+							@Html.DisplayFor(modelItem => item.RatingValue)
+						</td>
+						<td>
+							<p onclick="@c.AddRating(Model.PageId, item.Id)" class="btn btn-primary btn-lg">Rate</p>
+						</td>
+					</tr>
+				}
+			</table>
+	</div>
+								}
+
+<div>
+	@Html.ActionLink("Back to Details", "Details", new { id = Model.PageId })
+</div>
+
+@section Scripts {
+	@Scripts.Render("~/bundles/jqueryval")
+}
