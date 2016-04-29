@@ -1,0 +1,8 @@
+﻿CREATE PROCEDURE ClearDatabase
+
+AS
+BEGIN
+	DELETE FROM WikiPages;
+	DELETE FROM Categories;
+
+END
